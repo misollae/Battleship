@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<!-- Restrições -->
+	<xs:simpleType name="casaTabuleiro">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([A-J]([1-9]|10))"></xs:pattern>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="atingido">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(X|O)"></xs:pattern>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!-- Definição de atributos -->
+	<xs:attribute name="nome" type="xs:string" />
+	<xs:attribute name="password" type="xs:string" />
+	<xs:attribute name="vitorias" type="xs:nonNegativeInteger" />
+	<xs:attribute name="IDJogo" type="xs:string" />
+	<xs:attribute name="proximo" type="xs:string" />
+	<xs:attribute name="tipo" type="xs:string" />
+	<xs:attribute name="posicao" type="casaTabuleiro" />
+
+
+	<!-- Definição de elementos simples -->
+	<xs:element name="fotografia" type="xs:string"></xs:element>
+	<xs:element name="posicao" type="casaTabuleiro"></xs:element>
+	<xs:element name="tiroSofrido" type="atingido"></xs:element>
+
+
+	<!-- Definição de tipos complexos -->
+
+	<xs:element name="jogadores">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="jogadorInscrito" maxOccurs="unbounded"></xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="jogadorInscrito">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="fotografia"></xs:element>
+			</xs:sequence>
+			<xs:attribute ref="nome"></xs:attribute>
+			<xs:attribute ref="password"></xs:attribute>
+			<xs:attribute ref="vitorias"></xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+
+	<xs:element name="jogador">
+		<xs:complexType>
+			<xs:attribute ref="nome"></xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+
+	<xs:element name="servidor">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="jogadores"></xs:element>
+				<xs:element ref="jogosAtivos"></xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="jogoAtivo">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="jogador" maxOccurs="unbounded"></xs:element>
+			</xs:sequence>
+			<xs:attribute ref="IDJogo"></xs:attribute>
+			<xs:attribute ref="proximo"></xs:attribute>
+		</xs:complexType>
+	</xs:element>
+
+
+	<xs:element name="jogosAtivos">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="jogoAtivo" minOccurs="0" maxOccurs="unbounded"></xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="tabuleiro">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="barco" maxOccurs="unbounded"></xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	
+	<xs:element name="barco">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="posicao" maxOccurs="unbounded"></xs:element>
+			</xs:sequence>
+			<xs:attribute ref="tipo"></xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	
+
+
+</xs:schema>

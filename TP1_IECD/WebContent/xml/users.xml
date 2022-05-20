@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<servidor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="xsdServer.xsd">
+	<jogadores>
+		<jogadorInscrito nome="Crazed" password="123456" vitorias="0">
+			<fotografia>fotoCrazed.png</fotografia>
+		</jogadorInscrito>
+		<jogadorInscrito nome="Misollae" password="abcdef" vitorias="1">
+			<fotografia>fotoMisollae.png</fotografia>
+		</jogadorInscrito>
+		<jogadorInscrito nome="Dani.fifi" password="123abc" vitorias="10">
+			<fotografia></fotografia>
+		</jogadorInscrito>
+	</jogadores>
+	
+	<jogosAtivos>
+	</jogosAtivos>
+</servidor>

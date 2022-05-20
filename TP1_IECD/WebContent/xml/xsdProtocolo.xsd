@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+
+	<!-- Restrições -->
+	<xs:simpleType name="casaTabuleiro">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([A-J]([1-9]|10))"></xs:pattern>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="atingido">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="(X|O)"></xs:pattern>
+		</xs:restriction>
+	</xs:simpleType>
+
+
+	<!-- Definição de elementos simples -->
+	<xs:element name="nickname" type="xs:string"></xs:element>
+	<xs:element name="password" type="xs:string"></xs:element>
+
+
+	<!-- Definição de tipos complexos -->
+	<xs:element name="protocolo">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element ref="validar"></xs:element>
+				<xs:element ref="registar"></xs:element>
+				<xs:element ref="jogar"></xs:element>
+				<xs:element ref="randomizar"></xs:element>
+				<xs:element ref="logout"></xs:element>
+				<xs:element ref="mostrarFoto"></xs:element>
+				<xs:element ref="ranking"></xs:element>
+				<xs:element ref="apresentar"></xs:element>
+				<xs:element ref="disparar"></xs:element>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+
+
+	<xs:element name="validar">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element name="pedido">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="nickname"></xs:element>
+							<xs:element ref="password"></xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="resposta">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern value="(Login validado! | Login Inválido)"></xs:pattern>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+
+
+	<xs:element name="registar">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element name="pedido">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="nickname"></xs:element>
+							<xs:element ref="password"></xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="resposta">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:pattern
+								value="(Conta criada! | Já existe uma conta com esse surname!)"></xs:pattern>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+
+
+	<xs:element name="mostrarFoto">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element name="pedido">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="nickname"></xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="resposta">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="fotografia" type="xs:string"></xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+
+
+	<xs:element name="ranking">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element name="pedido">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="nickname"></xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="resposta">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="jogadorRanking"
+								maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:attribute name="nome" type="xs:string"></xs:attribute>
+									<xs:attribute name="vitorias"
+										type="xs:nonNegativeInteger"></xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+
+
+	<xs:element name="logout">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element name="pedido">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="nickname"></xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="resposta" type="xs:string"></xs:element>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+
+
+	<xs:element name="randomizar">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element name="pedido">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="nickname"></xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="resposta">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="barco" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="posicao" maxOccurs="unbounded"
+											type="casaTabuleiro"></xs:element>
+									</xs:sequence>
+									<xs:attribute name="tipo" type="xs:string"></xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+
+
+	<xs:element name="jogar">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element name="pedido">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="nickname"></xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="resposta" type="xs:string"></xs:element>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+
+
+	<xs:element name="disparar">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element name="pedido">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="nickname"></xs:element>
+							<xs:element name="tiro" type="casaTabuleiro"></xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="resposta" type="xs:string"></xs:element>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+
+
+	<xs:element name="apresentar">
+		<xs:complexType>
+			<xs:choice>
+				<xs:element name="pedido">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="nickname"></xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="resposta">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="barco" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="posicao" maxOccurs="unbounded"
+											type="casaTabuleiro"></xs:element>
+									</xs:sequence>
+									<xs:attribute name="tipo" type="xs:string"></xs:attribute>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="tiroSofrido" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="atingido">
+											<xs:attribute name="posicao" type="casaTabuleiro"></xs:attribute>										
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="tiroDado" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:simpleContent>
+										<xs:extension base="atingido">
+											<xs:attribute name="posicao" type="casaTabuleiro"></xs:attribute>										
+										</xs:extension>
+									</xs:simpleContent>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:choice>
+		</xs:complexType>
+	</xs:element>
+
+
+</xs:schema>
